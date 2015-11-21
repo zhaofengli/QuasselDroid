@@ -246,4 +246,15 @@ public class UserCollection extends Observable implements Observer {
         }
         return IrcMode.USER;
     }
+
+    public IrcMode getModeByNick(String nick) {
+        for (IrcMode mode : IrcMode.values()) {
+            for (IrcUser user : users.get(mode)) {
+                if (user.nick.equals(nick)) {
+                    return mode;
+                }
+            }
+        }
+	return IrcMode.USER;
+    }
 }

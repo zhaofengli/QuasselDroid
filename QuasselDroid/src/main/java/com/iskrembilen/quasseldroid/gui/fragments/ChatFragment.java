@@ -74,6 +74,7 @@ import com.iskrembilen.quasseldroid.protocol.state.Client;
 import com.iskrembilen.quasseldroid.protocol.state.IrcMessage;
 import com.iskrembilen.quasseldroid.protocol.state.IrcMessage.Type;
 import com.iskrembilen.quasseldroid.protocol.state.NetworkCollection;
+import com.iskrembilen.quasseldroid.protocol.state.IrcMode;
 import com.iskrembilen.quasseldroid.R;
 import com.iskrembilen.quasseldroid.events.BufferOpenedEvent;
 import com.iskrembilen.quasseldroid.events.CompleteNickEvent;
@@ -857,9 +858,11 @@ public class ChatFragment extends Fragment implements Serializable {
                     break;
                 case Plain:
                 default:
+	            IrcMode mode = buffer.getUsers().getModeByNick(entry.getNick()); // FENG
+		    nick = mode.icon.toString().concat(entry.getNick());
                     holder.msgView.setTextColor(ThemeUtil.Color.chatPlain);
 
-                    holder.msgView.setText(TextUtils.concat(formatter.formatNick(entry.getNick(), entry.isSelf() || entry.isHighlighted()), " ", MessageUtil.parseStyleCodes(getActivity(),entry.content.toString(),parseColors)));
+                    holder.msgView.setText(TextUtils.concat(formatter.formatNick(nick, entry.isSelf() || entry.isHighlighted()), " ", MessageUtil.parseStyleCodes(getActivity(),entry.content.toString(),parseColors)));
 
                     holder.parent.setBackgroundColor(android.graphics.Color.TRANSPARENT);
                     break;
